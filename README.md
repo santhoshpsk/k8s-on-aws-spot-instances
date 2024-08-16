@@ -1,5 +1,7 @@
 # Kubernetes on AWS EC2 Spot Instances
 
+![Handling Spot Instance Termination](<assets/Spot-Int-Sig-handling.gif>)
+
 This project demonstrates how to set up and run a Kubernetes cluster on AWS EC2 Spot Instances, taking advantage of the cost savings offered by Spot Instances while maintaining a robust and resilient infrastructure.
 
 # Table of contents
