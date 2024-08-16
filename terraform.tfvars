@@ -1,3 +1,17 @@
+/*************************************************
+
+!!!!!!!!!!!!!!!  IMPORTANT  !!!!!!!!!!!!!!!!!!!
+
+You might need to change following variables values as well, if you want to change the region.
+1. master-node-ami
+2. worker-nodes-ami
+3. master-node-key-pair-name
+4. worker-nodes-key-pair-name
+5. master-node-security-groups-ids
+6. worker-nodes-vpc-sgs
+
+************************************************/
+
 region = "ap-south-1"
 
 project-name = "k8s-on-spot"

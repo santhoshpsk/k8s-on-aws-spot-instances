@@ -9,6 +9,7 @@ This project demonstrates how to set up and run a Kubernetes cluster on AWS EC2 
 * [Prerequisites](#prerequisites)
 * [Architecture](#architecture)
 * [Challenges of using Spot Instances](#challenges-of-using-spot-instances)
+* []
 
 ## Introduction
 This project is aimed at demonstrating a cost-effective way to run Kubernetes clusters using AWS EC2 Spot Instances. Spot Instances allow you to bid on unused EC2 capacity, offering significant savings compared to On-Demand Instances. However, they come with the risk of being terminated when AWS needs the capacity back, which adds an interesting challenge to maintaining a resilient Kubernetes cluster.
@@ -50,3 +51,7 @@ Steps for Draining a Node:
 * **Step 4:** Once all pods are evicted, the node can be safely terminated.
 
 ![Handling Spot Instance Termination](<assets/Spot-Int-Sig-handling.gif>)
+
+## Installation
+### Using Terraform
+The overall resources deployments are designed using Terraform. Anyone can modify the values accordingly to deploy and test in their environment.
