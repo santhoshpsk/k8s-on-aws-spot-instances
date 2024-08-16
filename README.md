@@ -9,7 +9,7 @@ This project demonstrates how to set up and run a Kubernetes cluster on AWS EC2 
 * [Prerequisites](#prerequisites)
 * [Architecture](#architecture)
 * [Challenges of using Spot Instances](#challenges-of-using-spot-instances)
-* []
+* [Installation](#installation)
 
 ## Introduction
 This project is aimed at demonstrating a cost-effective way to run Kubernetes clusters using AWS EC2 Spot Instances. Spot Instances allow you to bid on unused EC2 capacity, offering significant savings compared to On-Demand Instances. However, they come with the risk of being terminated when AWS needs the capacity back, which adds an interesting challenge to maintaining a resilient Kubernetes cluster.
