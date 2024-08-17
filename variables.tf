@@ -26,11 +26,6 @@ variable "master-node-ami" {
   description = "AMI of the master node"
 }
 
-variable "master-node-key-pair-name" {
-  type        = string
-  description = "Key pair name that wanted to attached to master node"
-}
-
 variable "master-node-tags" {
   type        = map(string)
   description = "Tags of master node"
@@ -68,11 +63,6 @@ variable "worker-nodes-lt-tags" {
 variable "worker-nodes-lt-propogate-tags" {
   type        = map(string)
   description = "Worker nodes' tags that's propogating from lt"
-}
-
-variable "worker-nodes-key-pair-name" {
-  type        = string
-  description = "Worker nodes' SSH ke pair name"
 }
 
 variable "worker-nodes-user-data-file" {

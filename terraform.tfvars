@@ -2,13 +2,11 @@
 
 !!!!!!!!!!!!!!!  IMPORTANT  !!!!!!!!!!!!!!!!!!!
 
-You might need to change following variables values as well, if you want to change the region.
-1. master-node-ami
-2. worker-nodes-ami
-3. master-node-key-pair-name
-4. worker-nodes-key-pair-name
-5. master-node-security-groups-ids
-6. worker-nodes-vpc-sgs
+You might need to change following variables values as well, if you want to deploy this solution into your account.
+1. master-node-ami (this may be common)
+2. worker-nodes-ami (this may be common)
+3. master-node-security-groups-ids
+4. worker-nodes-vpc-sgs
 
 ************************************************/
 
@@ -21,7 +19,6 @@ project-name = "k8s-on-spot"
 master-node-instance-type       = "t3.medium"
 master-node-security-groups-ids = ["sg-01ea920e733bef4ee"]
 master-node-ami                 = "ami-0ad21ae1d0696ad58"
-master-node-key-pair-name       = "key-pair-2"
 master-node-tags = {
   project   = "k8s-on-spot"
   node-type = "master"
@@ -48,7 +45,6 @@ worker-nodes-lt-propogate-tags = {
   node-type = "worker"
   Name      = "k8s-on-spot-worker-node"
 }
-worker-nodes-key-pair-name            = "key-pair-2"
 worker-nodes-user-data-file           = "initialize-worker-node.sh"
 worker-nodes-role-managed-policy-arns = ["arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"]
 worker-nodes-asg-min-memory-mb        = 4000

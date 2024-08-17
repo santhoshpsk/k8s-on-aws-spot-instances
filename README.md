@@ -4,54 +4,52 @@
 
 This project demonstrates how to set up and run a Kubernetes cluster on AWS EC2 Spot Instances, taking advantage of the cost savings offered by Spot Instances while maintaining a robust and resilient infrastructure.
 
-# Table of contents
-* [Introduction](#introduction)
-* [Prerequisites](#prerequisites)
-* [Architecture](#architecture)
-* [Challenges of using Spot Instances](#challenges-of-using-spot-instances)
-* [Installation](#installation)
+# Table of Contents
+- [Introduction](#introduction)
+- [Prerequisites](#prerequisites)
+- [Architecture](#architecture)
+- [Challenges of Using Spot Instances](#challenges-of-using-spot-instances)
+- [Installation](#installation)
 
 ## Introduction
-This project is aimed at demonstrating a cost-effective way to run Kubernetes clusters using AWS EC2 Spot Instances. Spot Instances allow you to bid on unused EC2 capacity, offering significant savings compared to On-Demand Instances. However, they come with the risk of being terminated when AWS needs the capacity back, which adds an interesting challenge to maintaining a resilient Kubernetes cluster.
+Running Kubernetes clusters on AWS EC2 Spot Instances offers significant cost savings by allowing you to bid on unused EC2 capacity. However, Spot Instances can be terminated with little notice when AWS reclaims capacity, posing a challenge to maintaining a stable and resilient Kubernetes environment.
 
 ![Overall Structure](<assets/overall-structure.gif>)
 
 ## Prerequisites
-Before starting, ensure you have the following:
+Before you begin, ensure the following are in place:
 
-* An AWS account
-* Terraform installed on your local machine
-* kubectl installed on your local machine
+- An AWS account
+- Terraform installed locally
+- kubectl installed locally
 
 ## Architecture
-The architecture of this project includes:
+The project architecture includes:
 
-* EC2 Spot Instances: Running Kubernetes nodes.
-* Auto Scaling Group (ASG): Ensuring the desired number of Spot Instances are always running.
-* Kubernetes Master Nodes: Running on On-Demand Instance.
-* Load Balancer: For distributing traffic across your Kubernetes nodes.
+- **EC2 Spot Instances:** Running Kubernetes nodes.
+- **Auto Scaling Group (ASG):** Ensuring the desired number of Spot Instances are maintained.
+- **Kubernetes Master Nodes:** Deployed on On-Demand Instances for stability.
 
-## Challenges of using Spot Instances
-Using Spot Instances for a Kubernetes cluster can significantly reduce costs, but it introduces a challenge that need to be carefully managed:
+## Challenges of Using Spot Instances
+While Spot Instances reduce costs, they come with the risk of termination when AWS reclaims capacity, which can disrupt your cluster.
 
-### Instance Termination
-Spot Instances can be terminated with little notice when AWS needs the capacity back, which can disrupt your applications.
+### Handling Instance Termination
+AWS provides a two-minute termination notice when reclaiming a Spot Instance. This short window requires efficient handling to minimize disruption to your Kubernetes cluster.
 
-#### Understanding Spot Instance Termination
-When AWS reclaims the capacity of a Spot Instance, it sends a termination notice to the instance. This notice is typically sent two minutes before the instance is terminated. It's crucial to use this time effectively to ensure a graceful shutdown and to minimize the impact on your Kubernetes cluster.
+#### Graceful Node Draining Process
+When a termination notice is received:
 
-#### Graceful Node Draining
-When a termination notice is received, it's essential to drain the node to ensure that running pods are safely evicted and rescheduled on other nodes. Draining involves marking the node as unschedulable and evicting all pods.
-
-Steps for Draining a Node:
-
-* **Step 1:** Detect termination notice via AWS EventBridge rule.
-* **Step 2:** Trigger a Kubernetes kubectl drain command for the node using AWS Systems Manager Document run.
-* **Step 3:** Kubernetes evicts pods from the node.
-* **Step 4:** Once all pods are evicted, the node can be safely terminated.
+1. **Detect Termination Notice:** Capture the event using an AWS EventBridge rule.
+2. **Trigger Node Draining:** Use AWS Systems Manager to run a `kubectl drain` command, making the node unschedulable and evicting all pods.
+3. **Evict and Reschedule Pods:** Kubernetes evicts the pods, and they are rescheduled on other available nodes.
+4. **Safe Termination:** Once all pods are evicted, the node is safely terminated.
 
 ![Handling Spot Instance Termination](<assets/Spot-Int-Sig-handling.gif>)
 
 ## Installation
-### Using Terraform
-The overall resources deployments are designed using Terraform. Anyone can modify the values accordingly to deploy and test in their environment.
+### Deploying with Terraform
+This project is fully deployable using Terraform. You can modify configurations to suit your environment:
+
+- Tested in the ap-south-1 region.
+- Review and adjust settings in `terraform.tfvars` if deploying in a different region or account.
+- No key-pair is attached to EC2 instances to reduce dependency, but all instances are configured to join Systems Manager, allowing connection through Systems Manager Sessions.

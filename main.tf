@@ -32,7 +32,6 @@ resource "aws_instance" "master-node" {
   user_data              = filebase64("${path.module}/${var.master-node-user-data-file}")
   vpc_security_group_ids = var.master-node-security-groups-ids
   iam_instance_profile   = aws_iam_instance_profile.instance-profile-for-master-node.name
-  key_name               = var.master-node-key-pair-name
   tags                   = var.master-node-tags
 }
 
@@ -53,8 +52,6 @@ resource "aws_launch_template" "worker-nodes-lt" {
   iam_instance_profile {
     name = aws_iam_instance_profile.instance-profile-for-worker-node.name
   }
-
-  key_name = var.worker-nodes-key-pair-name
 
   tags = var.worker-nodes-lt-tags
 
